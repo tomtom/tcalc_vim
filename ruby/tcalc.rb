@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # tcalc.rb
-# @Last Change: 2010-03-13.
+# @Last Change: 2010-04-07.
 # Author::      Tom Link (micathom AT gmail com)
 # License::     GPL (see http://www.gnu.org/licenses/gpl.txt)
 # Created::     2007-10-23.
@@ -59,7 +59,7 @@ class TCalc::Base
             'at',
             'args', 'assert', 'validate',
             'source', 'require',
-            'history',
+            'history', 'help',
             'p',
             # 'puts', 'pp',
             '#',
@@ -303,6 +303,11 @@ class TCalc::Base
                             elsif @cmds.include?(cmd_name)
                                 # p "DBG t1"
                                 case cmd_name
+
+                                when 'help'
+                                    if help
+                                        return
+                                    end
 
                                 when 'history'
                                     print_array(@history, false, false)
@@ -898,6 +903,13 @@ class TCalc::Base
     end
 
 
+    def help
+        help_file = File.join(File.dirname(__FILE__), '..', 'doc', 'tcalc.doc')
+        puts File.read(help_file)
+        false
+    end
+
+
     def plot(ydim, xdim, yvals, register)
         yyvals = yvals.map {|x,y| y}
         ymax   = yyvals.max
@@ -1234,6 +1246,13 @@ class TCalc::VIM < TCalc::Base
 
 
     def cleanup
+    end
+
+
+    def help
+        VIM::command(%{help tcalc})
+        VIM::command(%{wincmd p})
+        true
     end
 
 
