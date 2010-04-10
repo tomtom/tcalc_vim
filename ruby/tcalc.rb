@@ -910,6 +910,13 @@ class TCalc::Base
     end
 
 
+    def help
+        help_file = File.join(File.dirname(__FILE__), '..', 'doc', 'tcalc.doc')
+        puts File.read(help_file)
+        false
+    end
+
+
     def plot(ydim, xdim, yvals, register)
         yyvals = yvals.map {|x,y| y}
         ymax   = yyvals.max
@@ -1246,6 +1253,13 @@ class TCalc::VIM < TCalc::Base
 
 
     def cleanup
+    end
+
+
+    def help
+        VIM::command(%{help tcalc})
+        VIM::command(%{wincmd p})
+        true
     end
 
 
