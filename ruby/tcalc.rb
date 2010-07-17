@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # tcalc.rb
-# @Last Change: 2010-04-07.
+# @Last Change: 2010-07-11.
 # Author::      Tom Link (micathom AT gmail com)
 # License::     GPL (see http://www.gnu.org/licenses/gpl.txt)
 # Created::     2007-10-23.
@@ -1206,13 +1206,15 @@ end
 
 
 class TCalc::VIM < TCalc::Base
-    @tcalc = nil
+    # @tcalc = TCalc::VIM.new
+    @tcalc = self.new
 
     class << self
         def get_tcalc
-            unless @tcalc
-                @tcalc = self.new
-            end
+            # unless @tcalc
+            #     # @tcalc = self.new
+            #     @tcalc = TCalc::VIM.new
+            # end
             @tcalc
         end
 
