@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # tcalc.rb
-# @Last Change: 2010-07-11.
+# @Last Change: 2010-07-31.
 # Author::      Tom Link (micathom AT gmail com)
 # License::     GPL (see http://www.gnu.org/licenses/gpl.txt)
 # Created::     2007-10-23.
@@ -180,8 +180,11 @@ class TCalc::Base
                             echo_error 'Unmatched ]'
                         end
 
-                    elsif cmd =~ /^-?\d/
+                    elsif cmd =~ /^[+-]?\d/
                         stack_push eval(cmd).to_f
+
+                    elsif cmd =~ /^([+-])?\.(\d.*)$/
+                        stack_push eval('%s0.%s' % [$1, $2]).to_f
 
                     elsif cmd =~ /^"(.*)"$/
                         stack_push eval(cmd)
