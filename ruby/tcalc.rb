@@ -904,14 +904,7 @@ class TCalc::Base
 
 
     def help
-        help_file = File.join(File.dirname(__FILE__), '..', 'doc', 'tcalc.doc')
-        puts File.read(help_file)
-        false
-    end
-
-
-    def help
-        help_file = File.join(File.dirname(__FILE__), '..', 'doc', 'tcalc.doc')
+        help_file = File.join(File.dirname(__FILE__), '..', 'doc', 'tcalc.txt')
         puts File.read(help_file)
         false
     end
@@ -1265,13 +1258,6 @@ class TCalc::VIM < TCalc::Base
     end
 
 
-    def help
-        VIM::command(%{help tcalc})
-        VIM::command(%{wincmd p})
-        true
-    end
-
-
     def display_stack
         dstack = format(stack).join("\n")
         # VIM::evaluate(%{s:DisplayStack(split(#{dstack.inspect}, '\n'))})
@@ -1412,6 +1398,14 @@ class TCalc::Curses < TCalc::CommandLine
     end
 
 
+    def help
+        help_file = File.join(File.dirname(__FILE__), '..', 'doc', 'tcalc.txt')
+        help_text = File.readlines(help_file)
+        print_array(help_text, false, false, true)
+        press_enter
+        false
+    end
+
     def display_stack
         @curses.clear
         dstack = format(stack)
@@ -1419,7 +1413,7 @@ class TCalc::Curses < TCalc::CommandLine
     end
 
 
-    def print_array(arr, reversed=true, align=true)
+    def print_array(arr, reversed=true, align=true, topdown=false)
         @curses.clear
         y0   = curses_lines - 3
         x0   = 3 + @curses.cols / 3
@@ -1429,14 +1423,19 @@ class TCalc::Curses < TCalc::CommandLine
         xlim = @curses.cols - idxs
         xlin = xlim - x0
         arr.each_with_index do |e, i|
-            @curses.setpos(y0 - i, 0)
+            ii = i % y0
+            if i > 0 and ii == 0
+                press_enter
+            end
+            y1 = topdown ? ii : (y0 - ii)
+            @curses.setpos(y1, 0)
             @curses.addstr(idxf % i)
             if align
                 period = e.rindex(FLOAT_PERIOD) || e.size
-                @curses.setpos(y0 - i, x0 - period)
+                @curses.setpos(y1, x0 - period)
                 @curses.addstr(e[0..xlin])
             else
-                @curses.setpos(y0 - i, idxs + 2)
+                @curses.setpos(y1, idxs + 2)
                 @curses.addstr(e[0..xlim])
             end
         end
