@@ -3,11 +3,10 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-10-07.
-" @Last Change: 2010-08-09.
-" @Revision:    0.0.546
+" @Last Change: 2010-09-19.
+" @Revision:    0.0.555
 
 " call tlog#Log('Load: '. expand('<sfile>')) " vimtlib-sfile
-
 
 if !exists('g:tcalc_initialize')
     " A string that will be read when first invoking |:TCalc|.
@@ -121,7 +120,6 @@ function! tcalc#Complete(ArgLead, CmdLine, CursorPos) "{{{3
     VIM::command("return split(#{ids.join("\n").inspect}, '\n')")
 EOR
 endf
-
 
 exec 'rubyfile '. expand('<sfile>:p:h:h') .'/ruby/tcalc.rb'
 

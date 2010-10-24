@@ -1,5 +1,3 @@
-*tcalc.txt*         A ruby-based RPN calculator for vim
-
 It turns out that ruby is pretty good at maths and deals well with 
 complex or rational numbers etc. Anyway, in certain occasions a postfix 
 syntax and a stack are better suited for calculations than ruby's infix 

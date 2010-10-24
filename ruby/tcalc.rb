@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # tcalc.rb
-# @Last Change: 2010-07-31.
+# @Last Change: 2010-09-19.
 # Author::      Tom Link (micathom AT gmail com)
 # License::     GPL (see http://www.gnu.org/licenses/gpl.txt)
 # Created::     2007-10-23.
@@ -884,6 +884,7 @@ class TCalc::Base
 
 
     def iqueue_empty?
+        # p "DBG", iqueue.class
         (iqueue).empty?
     end
 
@@ -1527,7 +1528,7 @@ class TCalc::Curses < TCalc::CommandLine
                 if m
                     c0 = m[0]
                     cc = complete_command(c0, nil, nil, true)
-                    p "DBG", cc
+                    # p "DBG", cc
                     case cc
                     when Array
                         print_array(cc.sort)
